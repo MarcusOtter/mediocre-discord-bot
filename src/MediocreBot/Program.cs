@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MediocreBot
 {
@@ -7,7 +6,7 @@ namespace MediocreBot
     {
         private static async Task Main()
         {
-            Console.WriteLine("Hello World!");
+            await new MediocreBot().ConnectAsync();
             await Task.Delay(-1);
         }
     }

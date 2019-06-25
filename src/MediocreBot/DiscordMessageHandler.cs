@@ -38,11 +38,10 @@ namespace MediocreBot
 
         private async Task HandleCommand(SocketUserMessage message, SocketCommandContext context)
         {
-            int argPos = 0;
-            if (!MessageIsCommand(message, context, argPos)) { return; }
+            int argPosition = 0;
+            if (!MessageIsCommand(message, context, ref argPosition)) { return; }
 
-            // The commands don't work.. not recognized with the prefix? Why?
-            var result = await _commandService.ExecuteAsync(context, argPos, services: null);
+            var result = await _commandService.ExecuteAsync(context, argPosition, services: null);
             if (result.IsSuccess) { return; }
 
             StatusLogger.Log($"{result.ErrorReason}: {result.Error}");
@@ -51,12 +50,10 @@ namespace MediocreBot
         }
 
         /// <summary>Returns true if the message starts with a prefix, a mention or is sent in DMs.</summary>
-        private bool MessageIsCommand(SocketUserMessage message, SocketCommandContext context, int argPosition)
+        private bool MessageIsCommand(SocketUserMessage message, SocketCommandContext context, ref int argPosition)
         {
-            int newPost = argPosition;
-
-            return message.HasStringPrefix(_botConfiguration.Prefix, ref newPost) || 
-                   message.HasMentionPrefix(context.Client.CurrentUser, ref newPost);
+            return message.HasStringPrefix(_botConfiguration.Prefix, ref argPosition) || 
+                   message.HasMentionPrefix(context.Client.CurrentUser, ref argPosition);
         }
     }
 }

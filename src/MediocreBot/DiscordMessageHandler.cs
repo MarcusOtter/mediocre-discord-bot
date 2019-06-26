@@ -43,17 +43,15 @@ namespace MediocreBot
 
             var result = await _commandService.ExecuteAsync(context, argPosition, services: null);
             if (result.IsSuccess) { return; }
-
-            StatusLogger.Log($"{result.ErrorReason}: {result.Error}");
-
             // todo: error handling with result here
         }
 
         /// <summary>Returns true if the message starts with a prefix, a mention or is sent in DMs.</summary>
         private bool MessageIsCommand(SocketUserMessage message, SocketCommandContext context, ref int argPosition)
         {
-            return message.HasStringPrefix(_botConfiguration.Prefix, ref argPosition) || 
-                   message.HasMentionPrefix(context.Client.CurrentUser, ref argPosition);
+            return message.HasStringPrefix(_botConfiguration.Prefix, ref argPosition) ||
+                   message.HasMentionPrefix(context.Client.CurrentUser, ref argPosition) ||
+                   context.IsPrivate;
         }
     }
 }

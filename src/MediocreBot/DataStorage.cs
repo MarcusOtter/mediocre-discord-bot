@@ -39,14 +39,13 @@ namespace MediocreBot
 
         /// <summary>
         /// Saves all the messages in a channel. 
-        /// This can be *extremely* slow and should probably not be used with channels over 10k messages?
-        /// I don't know the limits are.
+        /// This saves about 300-700 messages per second, which means it can take minutes for larger channels.
         /// </summary>
         public async Task SaveAllChannelMessagesAsync(ISocketMessageChannel channel)
         {
             IsSavingMessages = true;
             _channelMessages[channel.Id] = (await channel.GetMessagesAsync(int.MaxValue).FlattenAsync())
-                .Where(x => !x.Author.IsBot) // Todo: test how slow this line really is
+                .Where(x => !x.Author.IsBot)
                 .ToList();
             IsSavingMessages = false;
         }

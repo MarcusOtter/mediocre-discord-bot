@@ -24,9 +24,16 @@ namespace MediocreBot.Modules
 
             _mediocreFacts = new List<MediocreFact>
             {
+                ShortestMessage,
                 LongestMessage,
+
+                ShortestUsername,
                 LongestUsername,
+
+                ShortestNickname,
                 LongestNickname,
+
+                SmallestDiscriminator,
                 BiggestDiscriminator
             };
         }
@@ -63,41 +70,56 @@ namespace MediocreBot.Modules
             await ReplyAsync($"Okay. {_mediocreFacts[random.Next(0, _mediocreFacts.Count)]()}");
         }
 
+        private string ShortestMessage()
+        {
+            var shortestMessage = _channelMessages.Where(x => x.Content.Length > 0).OrderBy(x => x.Content.Length).FirstOrDefault();
+            return $"The shortest user message sent in this channel is {shortestMessage.Content.Length} character(s) long and was written by {shortestMessage.Author} at {shortestMessage.CreatedAt.Date.ToShortDateString()}? " +
+                $"The message was:\n```{shortestMessage.Content}```";
+        }
+
         private string LongestMessage()
         {
             var longestMessage = _channelMessages.OrderByDescending(x => x.Content.Length).FirstOrDefault();
-            return $"The longest message sent in this channel is {longestMessage.Content.Length} characters long and was written by {longestMessage.Author} at {longestMessage.CreatedAt.Date.ToShortDateString()}? " +
+            return $"The longest user message sent in this channel is {longestMessage.Content.Length} characters long and was written by {longestMessage.Author} at {longestMessage.CreatedAt.Date.ToShortDateString()}? " +
                 $"The message was:\n```{longestMessage.Content}```";
+        }
+
+        private string ShortestUsername()
+        {
+            var user = _serverUsers.OrderBy(x => x.Username.Length).FirstOrDefault();
+            return $"The user with the shortest username is {user.Mention}{(string.IsNullOrEmpty(user.Nickname) ? "" : $" ({user.Username})")} which is {user.Username.Length} characters long.";
         }
 
         private string LongestUsername()
         {
-            var userWithLongestUsername = _serverUsers.OrderByDescending(x => x.Username.Length).FirstOrDefault();
-            return $"The user with the longest username is {userWithLongestUsername.Mention} which is {userWithLongestUsername.Username.Length} characters long.";
+            var user = _serverUsers.OrderByDescending(x => x.Username.Length).FirstOrDefault();
+            return $"The user with the longest username is {user.Mention}{(string.IsNullOrEmpty(user.Nickname) ? "" : $" ({user.Username})")} which is {user.Username.Length} characters long.";
+        }
+
+        private string ShortestNickname()
+        {
+            var user = _serverUsers.Where(x => x.Nickname != null).OrderBy(x => x.Nickname.Length).FirstOrDefault();
+            if (user is null) return $"Nobody in this server has a nickname.";
+            return $"The user with the shortest nickname is {user.Mention} which is {user.Nickname.Length} characters long.";
         }
 
         private string LongestNickname()
         {
-            var userWithLongestNickname = _serverUsers.Where(x => x.Nickname != null).OrderByDescending(x => x.Nickname.Length).FirstOrDefault();
-            if (userWithLongestNickname is null) return $"Nobody in this server has a nickname.";
-            return $"The user with the longest nickname is {userWithLongestNickname.Mention} which is {userWithLongestNickname.Username.Length} characters long.";
+            var user = _serverUsers.Where(x => x.Nickname != null).OrderByDescending(x => x.Nickname.Length).FirstOrDefault();
+            if (user is null) return $"Nobody in this server has a nickname.";
+            return $"The user with the longest nickname is {user.Mention} which is {user.Nickname.Length} characters long.";
         }
 
         private string SmallestDiscriminator()
         {
-            var userWithSmallestDiscriminator = _serverUsers.OrderBy(x => x.DiscriminatorValue).FirstOrDefault();
-            return $"The user with the smallest discriminator value is {userWithSmallestDiscriminator.Mention}, which is #{userWithSmallestDiscriminator.DiscriminatorValue}.";
+            var user = _serverUsers.OrderBy(x => x.DiscriminatorValue).FirstOrDefault();
+            return $"The user with the smallest discriminator value is {user.Mention}, which is #{user.DiscriminatorValue.ToString("0000")}.";
         }
 
         private string BiggestDiscriminator()
         {
-            var userWithBiggestDiscriminator = _serverUsers.OrderByDescending(x => x.DiscriminatorValue).FirstOrDefault();
-            return $"The user with the biggest discriminator value is {userWithBiggestDiscriminator.Mention}, which is #{userWithBiggestDiscriminator.DiscriminatorValue}.";
+            var user = _serverUsers.OrderByDescending(x => x.DiscriminatorValue).FirstOrDefault();
+            return $"The user with the biggest discriminator value is {user.Mention}, which is #{user.DiscriminatorValue.ToString("0000")}.";
         }
-
-        //private string ServerCount()
-        //{
-        //    return "I am in 5 servers";
-        //}
     }
 }

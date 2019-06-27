@@ -14,6 +14,7 @@ namespace MediocreBot
         public bool IsSavingMessages;
         private Dictionary<ulong, List<IMessage>> _channelMessages = new Dictionary<ulong, List<IMessage>>();
 
+        /// <summary>Returns all the saved messages in this channel, where the most recent message is first.</summary>
         public List<IMessage> GetSavedMessages(ISocketMessageChannel channel) => _channelMessages[channel.Id];
         public bool ChannelHasMessagesSaved(ISocketMessageChannel channel) => _channelMessages.ContainsKey(channel.Id);
 
@@ -29,13 +30,11 @@ namespace MediocreBot
             IsSavingMessages = true;
             var newMessages = (await channel.GetMessagesAsync(latestMessageSaved.Id, Direction.After, int.MaxValue).FlattenAsync())
                 .Where(x => !x.Author.IsBot)
+                .Reverse()
                 .ToList();
             IsSavingMessages = false;
 
-            latestMessageSaved = newMessages.Last();
-            newMessages.Remove(latestMessageSaved);
-            _channelMessages[channel.Id].Prepend(latestMessageSaved);
-            _channelMessages[channel.Id].AddRange(newMessages);
+            _channelMessages[channel.Id].InsertRange(0, newMessages);
         }
 
         /// <summary>

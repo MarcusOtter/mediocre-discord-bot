@@ -76,7 +76,8 @@ namespace MediocreBot.Modules
             }
 
             var random = new Random();
-            await ReplyAsync(_mediocreFacts[random.Next(0, _mediocreFacts.Count)]());
+            var RandomFact = _mediocreFacts[random.Next(0, _mediocreFacts.Count)];
+            await ReplyAsync(RandomFact());
         }
 
         private string NoNicknames()

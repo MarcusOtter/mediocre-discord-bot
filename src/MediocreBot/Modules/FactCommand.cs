@@ -34,16 +34,6 @@ namespace MediocreBot.Modules
                 SmallestDiscriminator,
                 BiggestDiscriminator
             };
-
-            if (_hasNicknames)
-            {
-                _mediocreFacts.Add(ShortestNickname);
-                _mediocreFacts.Add(LongestNickname);
-            }
-            else
-            {
-                _mediocreFacts.Add(NoNicknames);
-            }
         }
 
         [Command("fact")]
@@ -73,7 +63,17 @@ namespace MediocreBot.Modules
 
             _channelMessages = _dataStorage.GetSavedMessages(Context.Channel);
             _serverUsers = Context.Guild.Users.ToArray();
+
             _hasNicknames = _serverUsers.Any(x => x.Nickname != null);
+            if (_hasNicknames)
+            {
+                _mediocreFacts.Add(ShortestNickname);
+                _mediocreFacts.Add(LongestNickname);
+            }
+            else
+            {
+                _mediocreFacts.Add(NoNicknames);
+            }
 
             var random = new Random();
             await ReplyAsync(_mediocreFacts[random.Next(0, _mediocreFacts.Count)]());

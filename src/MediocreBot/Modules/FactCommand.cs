@@ -17,6 +17,7 @@ namespace MediocreBot.Modules
 
         private SocketGuildUser[] _serverUsers;
         private List<IMessage> _channelMessages;
+        private bool _hasNicknames;
 
         private FactCommand()
         {
@@ -30,13 +31,19 @@ namespace MediocreBot.Modules
                 ShortestUsername,
                 LongestUsername,
 
-                // Todo: Only add these if any players have nicknames, otherwise add the error fact
-                ShortestNickname,
-                LongestNickname,
-
                 SmallestDiscriminator,
                 BiggestDiscriminator
             };
+
+            if (_hasNicknames)
+            {
+                _mediocreFacts.Add(ShortestNickname);
+                _mediocreFacts.Add(LongestNickname);
+            }
+            else
+            {
+                _mediocreFacts.Add(NoNicknames);
+            }
         }
 
         [Command("fact")]
@@ -66,9 +73,15 @@ namespace MediocreBot.Modules
 
             _channelMessages = _dataStorage.GetSavedMessages(Context.Channel);
             _serverUsers = Context.Guild.Users.ToArray();
+            _hasNicknames = _serverUsers.Any(x => x.Nickname != null);
 
             var random = new Random();
             await ReplyAsync(_mediocreFacts[random.Next(0, _mediocreFacts.Count)]());
+        }
+
+        private string NoNicknames()
+        {
+            return "Nobody in this server has a nickname.";
         }
 
         // A link to this message would be great
@@ -103,14 +116,12 @@ namespace MediocreBot.Modules
         private string ShortestNickname()
         {
             var user = _serverUsers.Where(x => x.Nickname != null).OrderBy(x => x.Nickname.Length).FirstOrDefault();
-            if (user is null) return $"Nobody in this server has a nickname.";
             return $"The user with the shortest nickname is `{user.Nickname}`, which has a nickname that is {user.Nickname.Length} characters long.";
         }
 
         private string LongestNickname()
         {
             var user = _serverUsers.Where(x => x.Nickname != null).OrderByDescending(x => x.Nickname.Length).FirstOrDefault();
-            if (user is null) return $"Nobody in this server has a nickname.";
             return $"The user with the longest nickname is `{user.Nickname}`, which has a nickname that is {user.Nickname.Length} characters long.";
         }
 

@@ -33,7 +33,9 @@ __Parameters__: The *channel* parameter is optional and defaults to the channel 
 __Example usage__: `@MediocreBot fact` *or with optional parameter* `@MediocreBot fact #general`
 
 ## Setup
-This should not take longer than a few minutes.
+Requirements:<br>
+* A few minutes
+* The dotnet sdk (verify that `dotnet --version` does not give you an error in the terminal)
 
 ### 1. Download the files from this repository
 ![Download](img/download.png)
@@ -55,8 +57,6 @@ This should not take longer than a few minutes.
 :warning: *If you are not running windows, use the [correct runtime identifier for your system](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog).*
 
 ![Publish](img/publish.png)
-
-This requires dotnet to be installed. You can verify that you have all the requirements by running the command `dotnet --version`. If it gives you a non-error output, you're probably good to go :smile:
 
 ### 6. Run `MediocreBot.exe` in `/src/MediocreBot/bin/Release/netcoreapp2.1/win10-x64/`
 And that's it! If your bot doesn't go online, you can either open an issue or write to me on Discord: `LeMorrow#8192`.

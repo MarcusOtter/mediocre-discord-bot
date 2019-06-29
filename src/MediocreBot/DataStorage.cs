@@ -52,12 +52,14 @@ namespace MediocreBot
 
         public BotConfiguration GetBotConfiguration()
         {
-            if (!File.Exists("../../../../../BotConfiguration.json"))
+            // Breaks unless it's running release version, very specific folder structure.
+
+            if (!File.Exists("../../../../../../BotConfiguration.json"))
             {
                 throw new FileNotFoundException("Your BotConfiguration.json file is missing. Create it and try again.");
             }
 
-            var botConfigJson = File.ReadAllText("../../../../../BotConfiguration.json");
+            var botConfigJson = File.ReadAllText("../../../../../../BotConfiguration.json");
             return JsonConvert.DeserializeObject<BotConfiguration>(botConfigJson);
         }
     }

@@ -1,9 +1,11 @@
 # MediocreBot
 |     | About                                                            |
 | --- | :--------------------------------------------------------------: |
-| ![Profile picture](img/pfp.png) | Are you tired of interesting facts? MediocreBot to the rescue!   |
+| ![Profile picture](img/pfp.png) | Are you tired of interesting facts? MediocreBot to the rescue! |
 
 ## About
+![Example](img/example.png)
+
 MediocreBot has more than 20 barely interesting facts about your discord server.<br>
 Examples include:
 * Who has the oldest discord account in the server?
@@ -12,7 +14,8 @@ Examples include:
 * Who wrote the 1337th message in this channel?
 
 ## Usage
-You can invoke a command by starting your message with a mention of the bot or the prefix. Examples: `@MediocreBot command` or `m!command` (if the prefix is left to the default `m!`).
+You can invoke a command by starting your message with a mention of the bot or the prefix.<br>
+Examples: `@MediocreBot command` or `m!command` (if the prefix is left to the default `m!`).
 
 ## Commands
 There are currently two commands that you can invoke.
@@ -32,30 +35,30 @@ __Example usage__: `@MediocreBot fact` *or with optional parameter* `@MediocreBo
 ## Setup
 This should not take longer than a few minutes.
 
-#### 1. Download the files from this repository
+### 1. Download the files from this repository
 ![Download](img/download.png)
 
-#### 2. Rename `BotConfiguration-template.json` to `BotConfiguration.json`
+### 2. Rename `BotConfiguration-template.json` to `BotConfiguration.json`
 ![Rename](img/rename.png)
 
-#### 3. Open `BotConfiguration.json` with a text editor and insert your token.
+### 3. Open `BotConfiguration.json` with a text editor and insert your token.
 *If you don't know how to get a token, read [this tutorial](https://www.writebots.com/discord-bot-token/).*
 
 ![Token](img/token.png)
 
-#### 4. Open a command window and navigate to `/src/MediocreBot/`. This folder should have `MediocreBot.csproj` in it.
+### 4. Open a command window and navigate to `/src/MediocreBot/`. This folder should have `MediocreBot.csproj` in it.
 :bulb: *You don't have the `bin` or `obj` folders yet. This is not a problem.*
 
 ![Folder](img/folder.png)
 
-#### 5. Run the command `dotnet publish -r win10-x64 -c Release`
+### 5. Run the command `dotnet publish -r win10-x64 -c Release`
 :warning: *If you are not running windows, use the [correct runtime identifier for your system](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog).*
 
 ![Publish](img/publish.png)
 
 This requires dotnet to be installed. You can verify that you have all the requirements by running the command `dotnet --version`. If it gives you a non-error output, you're probably good to go :smile:
 
-#### 6. Run `MediocreBot.exe` in `/src/MediocreBot/bin/Release/netcoreapp2.1/win10-x64/`
+### 6. Run `MediocreBot.exe` in `/src/MediocreBot/bin/Release/netcoreapp2.1/win10-x64/`
 And that's it! If your bot doesn't go online, you can either open an issue or write to me on Discord: `LeMorrow#8192`.
 
 ## Why?

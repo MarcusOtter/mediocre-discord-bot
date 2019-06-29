@@ -30,7 +30,7 @@ __Description__: A random fact about the channel. This command will perform a on
 
 __Parameters__: The *channel* parameter is optional and defaults to the channel that the command is invoked from. The channel parameter allows you to specify another channel to give a random fact about. This can be useful if you have a channel dedicated for bot usage but want statistics on the main channel without spamming it.
 
-__Example usage__: `@MediocreBot fact` *or with optional parameter* `@MediocreBot fact #main`
+__Example usage__: `@MediocreBot fact` *or with optional parameter* `@MediocreBot fact #general`
 
 ## Setup
 This should not take longer than a few minutes.
